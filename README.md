@@ -60,8 +60,6 @@ final-project/
 - Each subdirectory (2015–2025) contains CSV files for that NFL season
 - Data is used as input for model training and evaluation
 
----
-
 ## 🤖 Models
 
 - Stored in the `models/` directory
@@ -69,8 +67,6 @@ final-project/
 - Models are generated using:
   - `random_forest.py`
   - `logistic_regression.py`
-
----
 
 ## 📈 Predictions
 
