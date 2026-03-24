@@ -5,7 +5,9 @@ This project builds machine learning models to predict NFL game outcomes across 
 ---
 
 ## 📁 Project Structure
-my-project/
+
+```text
+final-project/
 ├── evaluate.py
 ├── scrape_data.py
 ├── random_forest.py
@@ -48,6 +50,7 @@ my-project/
 │   └── 2025/
 ├── Evaluation/
 ├── LaTeX/
+```
 
 ---
 
@@ -75,6 +78,10 @@ my-project/
 - Each subdirectory contains an Excel file with predicted game winners for the full season
 - Predictions are generated after training each model
 
+## 📁 Evaluation / LaTeX Directories
+- Evaluation: Stores all evaluation outputs and reporting artifacts.
+- Latex: Stores all LaTex Documents related to the report
+
 ---
 
 ## ⚙️ Scripts
@@ -97,8 +104,9 @@ my-project/
 - Outputs predictions to `predictions/<year>/`
 
 ### `evaluate.py`
-
-
+- Loads predictions and actual results for each NFL season  
+- Computes evaluation metrics: Accuracy, Precision, Recall, F1 Score, Confusion Matrix  
+- Saves metrics to `evaluation/<year>/` (CSV/JSON)  
 
 ---
 
@@ -110,4 +118,5 @@ my-project/
    python random_forest.py
    python logistic_regression.py
    python evaluate.py
+   ```
 
