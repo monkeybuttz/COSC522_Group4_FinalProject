@@ -5,7 +5,8 @@ This project builds machine learning models to predict NFL game outcomes across 
 ---
 
 ## 📁 Project Structure
-.
+my-project/
+├── evaluate.py
 ├── scrape_data.py
 ├── random_forest.py
 ├── logistic_regression.py
@@ -34,18 +35,19 @@ This project builds machine learning models to predict NFL game outcomes across 
 │   ├── 2024/
 │   └── 2025/
 └── predictions/
-    ├── 2015/
-    ├── 2016/
-    ├── 2017/
-    ├── 2018/
-    ├── 2019/
-    ├── 2020/
-    ├── 2021/
-    ├── 2022/
-    ├── 2023/
-    ├── 2024/
-    └── 2025/
-
+│   ├── 2015/
+│   ├── 2016/
+│   ├── 2017/
+│   ├── 2018/
+│   ├── 2019/
+│   ├── 2020/
+│   ├── 2021/
+│   ├── 2022/
+│   ├── 2023/
+│   ├── 2024/
+│   └── 2025/
+├── Evaluation/
+├── LaTeX/
 
 ---
 
@@ -78,7 +80,7 @@ This project builds machine learning models to predict NFL game outcomes across 
 ## ⚙️ Scripts
 
 ### `scrape_data.py`
-- Scrapes NFL data from a source website
+- Scrapes NFL data from a source website: https://www.pro-football-reference.com/years/<year>/ (where the <year> is the year we are collecting data for)
 - Processes and saves it as CSV files
 - Outputs data into the appropriate `data/<year>/` directory
 
@@ -94,6 +96,10 @@ This project builds machine learning models to predict NFL game outcomes across 
 - Serializes and saves the trained model to `models/<year>/`
 - Outputs predictions to `predictions/<year>/`
 
+### `evaluate.py`
+
+
+
 ---
 
 ## 🚀 Workflow
@@ -103,4 +109,5 @@ This project builds machine learning models to predict NFL game outcomes across 
    python scrape_data.py
    python random_forest.py
    python logistic_regression.py
+   python evaluate.py
 
