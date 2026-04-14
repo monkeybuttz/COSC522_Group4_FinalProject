@@ -1,54 +1,173 @@
 # 🏈 NFL Game Prediction Models
 
-This project builds machine learning models to predict NFL game outcomes across multiple seasons (2015–2025). It includes data scraping, model training, serialization, and prediction generation using both **Random Forest** and **Logistic Regression** approaches.
+This project builds machine learning models to predict NFL team Win-Loss rate across multiple seasons (2010–2025). It includes data scraping, model training, serialization, and prediction generation using **Random Forest**, **Logistic Regression**, **Naive Bayes**, and **Neural Network** approaches.
 
 ---
 
 ## 📁 Project Structure
 
 ```text
-final-project/
-├── evaluate.py
-├── scrape_data.py
-├── random_forest.py
+COSC522_Group4_FinalProject/
 ├── logistic_regression.py
+├── naive_bayes.py
+├── neural_network.py
+├── random_forest.py
+├── scrape_data.py
 ├── data/
-│   ├── 2015/
-│   ├── 2016/
-│   ├── 2017/
-│   ├── 2018/
-│   ├── 2019/
-│   ├── 2020/
-│   ├── 2021/
-│   ├── 2022/
-│   ├── 2023/
-│   ├── 2024/
-│   └── 2025/
+│   ├── 2010.csv
+│   ├── 2011.csv
+│   ├── 2012.csv
+│   ├── 2013.csv
+│   ├── 2014.csv
+│   ├── 2015.csv
+│   ├── 2016.csv
+│   ├── 2017.csv
+│   ├── 2018.csv
+│   ├── 2019.csv
+│   ├── 2020.csv
+│   ├── 2021.csv
+│   ├── 2022.csv
+│   ├── 2023.csv
+│   ├── 2024.csv
+│   └── 2025.csv
 ├── models/
-│   ├── 2015/
-│   ├── 2016/
-│   ├── 2017/
-│   ├── 2018/
-│   ├── 2019/
-│   ├── 2020/
-│   ├── 2021/
-│   ├── 2022/
-│   ├── 2023/
-│   ├── 2024/
-│   └── 2025/
+│   ├── Logistic_Regression/
+|   |   |── 2010/
+|   |   |── 2011/
+|   |   |── 2012/
+|   |   |── 2013/
+|   |   |── 2014/
+|   |   |── 2015/
+|   |   |── 2016/
+|   |   |── 2017/
+|   |   |── 2018/
+|   |   |── 2019/
+|   |   |── 2020/
+|   |   |── 2021/
+|   |   |── 2022/
+|   |   |── 2023/
+|   |   |── 2024/
+|   |   |── 2025/
+│   ├── Naive Bayes/
+|   |   |── 2010/
+|   |   |── 2011/
+|   |   |── 2012/
+|   |   |── 2013/
+|   |   |── 2014/
+|   |   |── 2015/
+|   |   |── 2016/
+|   |   |── 2017/
+|   |   |── 2018/
+|   |   |── 2019/
+|   |   |── 2020/
+|   |   |── 2021/
+|   |   |── 2022/
+|   |   |── 2023/
+|   |   |── 2024/
+|   |   |── 2025/
+│   ├── Neural Network/
+|   |   |── 2010/
+|   |   |── 2011/
+|   |   |── 2012/
+|   |   |── 2013/
+|   |   |── 2014/
+|   |   |── 2015/
+|   |   |── 2016/
+|   |   |── 2017/
+|   |   |── 2018/
+|   |   |── 2019/
+|   |   |── 2020/
+|   |   |── 2021/
+|   |   |── 2022/
+|   |   |── 2023/
+|   |   |── 2024/
+|   |   |── 2025/
+│   ├── Random Forest/
+|   |   |── 2010/
+|   |   |── 2011/
+|   |   |── 2012/
+|   |   |── 2013/
+|   |   |── 2014/
+|   |   |── 2015/
+|   |   |── 2016/
+|   |   |── 2017/
+|   |   |── 2018/
+|   |   |── 2019/
+|   |   |── 2020/
+|   |   |── 2021/
+|   |   |── 2022/
+|   |   |── 2023/
+|   |   |── 2024/
+|   |   |── 2025/
 └── predictions/
-│   ├── 2015/
-│   ├── 2016/
-│   ├── 2017/
-│   ├── 2018/
-│   ├── 2019/
-│   ├── 2020/
-│   ├── 2021/
-│   ├── 2022/
-│   ├── 2023/
-│   ├── 2024/
-│   └── 2025/
-├── Evaluation/
+│   ├── Logistic_Regression/
+|   |   |── 2010/
+|   |   |── 2011/
+|   |   |── 2012/
+|   |   |── 2013/
+|   |   |── 2014/
+|   |   |── 2015/
+|   |   |── 2016/
+|   |   |── 2017/
+|   |   |── 2018/
+|   |   |── 2019/
+|   |   |── 2020/
+|   |   |── 2021/
+|   |   |── 2022/
+|   |   |── 2023/
+|   |   |── 2024/
+|   |   |── 2025/
+│   ├── Naive Bayes/
+|   |   |── 2010/
+|   |   |── 2011/
+|   |   |── 2012/
+|   |   |── 2013/
+|   |   |── 2014/
+|   |   |── 2015/
+|   |   |── 2016/
+|   |   |── 2017/
+|   |   |── 2018/
+|   |   |── 2019/
+|   |   |── 2020/
+|   |   |── 2021/
+|   |   |── 2022/
+|   |   |── 2023/
+|   |   |── 2024/
+|   |   |── 2025/
+│   ├── Neural Network/
+|   |   |── 2010/
+|   |   |── 2011/
+|   |   |── 2012/
+|   |   |── 2013/
+|   |   |── 2014/
+|   |   |── 2015/
+|   |   |── 2016/
+|   |   |── 2017/
+|   |   |── 2018/
+|   |   |── 2019/
+|   |   |── 2020/
+|   |   |── 2021/
+|   |   |── 2022/
+|   |   |── 2023/
+|   |   |── 2024/
+|   |   |── 2025/
+│   ├── Random Forest/
+|   |   |── 2010/
+|   |   |── 2011/
+|   |   |── 2012/
+|   |   |── 2013/
+|   |   |── 2014/
+|   |   |── 2015/
+|   |   |── 2016/
+|   |   |── 2017/
+|   |   |── 2018/
+|   |   |── 2019/
+|   |   |── 2020/
+|   |   |── 2021/
+|   |   |── 2022/
+|   |   |── 2023/
+|   |   |── 2024/
+|   |   |── 2025/
 ├── LaTeX/
 ```
 
@@ -57,25 +176,26 @@ final-project/
 ## 📊 Data
 
 - Located in the `data/` directory
-- Each subdirectory (2015–2025) contains CSV files for that NFL season
+- Each subdirectory (2010–2025) contains CSV files for that NFL season
 - Data is used as input for model training and evaluation
 
 ## 🤖 Models
 
 - Stored in the `models/` directory
-- Each year contains serialized versions of trained models
+- Each year contains serialized versions of trained models using 'pickle' Python library
 - Models are generated using:
   - `random_forest.py`
   - `logistic_regression.py`
+  - `naive_bayes.py`
+  - `neural_network.py`
 
 ## 📈 Predictions
 
 - Stored in the `predictions/` directory
-- Each subdirectory contains an Excel file with predicted game winners for the full season
+- Each subdirectory contains CSV files with predictions of win/loss percentages for each team for that season
 - Predictions are generated after training each model
 
-## 📁 Evaluation / LaTeX Directories
-- Evaluation: Stores all evaluation outputs and reporting artifacts.
+## 📁 LaTeX Directory
 - Latex: Stores all LaTex Documents related to the report
 
 ---
@@ -85,24 +205,31 @@ final-project/
 ### `scrape_data.py`
 - Scrapes NFL data from a source website: https://www.pro-football-reference.com/years/<year>/ (where the <year> is the year we are collecting data for)
 - Processes and saves it as CSV files
-- Outputs data into the appropriate `data/<year>/` directory
+- Outputs data into the appropriate `data/<year>.csv/` directory
 
 ### `random_forest.py`
 - Builds and trains a Random Forest model
 - Generates predictions for a given season
-- Serializes and saves the trained model to `models/<year>/`
-- Outputs predictions to `predictions/<year>/`
+- Serializes and saves the trained model to `Models/Random Forest/<year>/` using 'pickle' Python library
+- Outputs predictions to `Predictions/Random Forest/<year>/`
 
 ### `logistic_regression.py`
 - Builds and trains a Logistic Regression model
 - Generates predictions for a given season
-- Serializes and saves the trained model to `models/<year>/`
-- Outputs predictions to `predictions/<year>/`
+- Serializes and saves the trained model to `Models/Logistic Regression/<year>/` using 'pickle' Python library
+- Outputs predictions to `Predictions/Logistic Regression/<year>/` 
 
-### `evaluate.py`
-- Loads predictions and actual results for each NFL season  
-- Computes evaluation metrics: Accuracy, Precision, Recall, F1 Score, Confusion Matrix  
-- Saves metrics to `evaluation/<year>/` (CSV/JSON)  
+### `naive_bayes.py`
+- Builds and trains a Naive Bayes model
+- Generates predictions for a given season  
+- Serializes and saves the trained model to `Models/Naive Bayes/<year>/` using 'pickle' Python library
+- Outputs predictions to `Predictions/Naive Bayes/<year>/`
+
+### `neural_network.py`
+- Builds and trains a Neural Network model
+- Generates predictions for a given season
+- Serializes and saves the trained model to `Models/Neural Network/<year>/` using 'pickle' Python library
+- Outputs predictions to `Predictions/Neural Network/<year>/`
 
 ---
 
@@ -113,6 +240,7 @@ final-project/
    python scrape_data.py
    python random_forest.py
    python logistic_regression.py
-   python evaluate.py
+   python naive_bayes.py
+   python neural_network.py 
    ```
 
