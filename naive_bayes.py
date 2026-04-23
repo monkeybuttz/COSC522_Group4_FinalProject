@@ -5,7 +5,13 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import (
+    accuracy_score,
+    classification_report,
+    confusion_matrix,
+    mean_squared_error,
+    r2_score,
+)
 
 
 print("RUNNING NAIVE BAYES FOR W-L% BUCKET CLASSIFICATION")
@@ -235,7 +241,35 @@ def main():
     report = classification_report(y_test, preds, zero_division=0)
     cm = confusion_matrix(y_test, preds)
 
+    info_test = info_test.reset_index(drop=True)
+    y_test = y_test.reset_index(drop=True)
+
+    actual_wl_percents = info_test["WL_percent"].astype(float).reset_index(drop=True)
+    predicted_wl_percents = pd.Series([bucket_midpoint(int(p)) for p in preds], dtype=float)
+
+    mse = mean_squared_error(actual_wl_percents, predicted_wl_percents)
+    r2 = r2_score(actual_wl_percents, predicted_wl_percents)
+
+    percent_errors = []
+    for actual_val, pred_val in zip(actual_wl_percents, predicted_wl_percents):
+        if actual_val == 0:
+            percent_errors.append(None)
+        else:
+            percent_errors.append(abs((actual_val - pred_val) / actual_val) * 100)
+
+    valid_percent_errors = [x for x in percent_errors if x is not None]
+    mean_percent_error = (
+        sum(valid_percent_errors) / len(valid_percent_errors)
+        if valid_percent_errors else None
+    )
+
     print(f"\nAccuracy: {acc:.4f}")
+    print(f"MSE (W-L%): {mse:.6f}")
+    print(f"R^2 (W-L%): {r2:.6f}")
+    if mean_percent_error is not None:
+        print(f"Mean Percent Error (W-L%): {mean_percent_error:.2f}%")
+    else:
+        print("Mean Percent Error (W-L%): N/A")
 
     joblib.dump(model, model_path)
     joblib.dump(scaler, scaler_path)
@@ -244,6 +278,12 @@ def main():
     write_line(results_path, f"Train rows: {len(X_train)}")
     write_line(results_path, f"Test rows: {len(X_test)}")
     write_line(results_path, f"Accuracy: {acc:.4f}")
+    write_line(results_path, f"MSE (Predicted vs Actual W-L%): {mse:.6f}")
+    write_line(results_path, f"R^2 (Predicted vs Actual W-L%): {r2:.6f}")
+    if mean_percent_error is not None:
+        write_line(results_path, f"Mean Percent Error (Predicted vs Actual W-L%): {mean_percent_error:.2f}%")
+    else:
+        write_line(results_path, "Mean Percent Error (Predicted vs Actual W-L%): N/A")
     write_line(results_path, "")
     write_line(results_path, "Classification Report")
     write_line(results_path, "-" * 30)
@@ -254,8 +294,6 @@ def main():
     write_line(results_path, str(cm))
 
     prediction_rows = []
-    info_test = info_test.reset_index(drop=True)
-    y_test = y_test.reset_index(drop=True)
 
     with open(predictions_txt_path, "a", encoding="utf-8") as f:
         for i, row in info_test.iterrows():
@@ -265,13 +303,20 @@ def main():
             actual_name = bucket_name(actual_bucket)
             predicted_name = bucket_name(pred_bucket)
             actual_wl_percent = float(row["WL_percent"])
-            predicted_wl_percent = bucket_midpoint(pred_bucket)
+            predicted_wl_percent = float(predicted_wl_percents.iloc[i])
+            absolute_error = abs(actual_wl_percent - predicted_wl_percent)
+            percent_error = percent_errors[i]
+
+            percent_error_text = (
+                f"{percent_error:.2f}%" if percent_error is not None else "N/A"
+            )
 
             line = (
                 f"Team {i + 1}: {row['Tm']} ({row['Season']}) | "
                 f"Actual Bucket={actual_name} | Predicted Bucket={predicted_name} | "
                 f"Actual W-L%={actual_wl_percent:.3f} | "
                 f"Predicted W-L%={predicted_wl_percent:.3f} | "
+                f"Percent Error={percent_error_text} | "
                 f"Record={int(row['W'])}-{int(row['L'])}"
             )
             f.write(line + "\n")
@@ -286,6 +331,8 @@ def main():
                 "PA": int(row["PA"]),
                 "Actual_WL_Percent": round(actual_wl_percent, 3),
                 "Predicted_WL_Percent": round(predicted_wl_percent, 3),
+                "Absolute_Error": round(absolute_error, 3),
+                "Percent_Error": round(percent_error, 2) if percent_error is not None else None,
                 "Actual_Bucket_ID": actual_bucket,
                 "Actual_Bucket_Name": actual_name,
                 "Predicted_Bucket_ID": pred_bucket,
