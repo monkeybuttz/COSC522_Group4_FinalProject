@@ -1,6 +1,6 @@
 # 🏈 NFL Game Prediction Models
 
-This project builds machine learning models to predict NFL team Win-Loss rate across multiple seasons (2010–2025). It includes data scraping, model training, serialization, and prediction generation using **Random Forest**, **Logistic Regression**, **Naive Bayes**, and **Neural Network** approaches.
+This project builds machine learning models to predict NFL team Win-Loss rate across multiple seasons (2010–2025). It includes data scraping, model training, serialization, and prediction generation using **Random Forest**, **Linear Regression**, **Naive Bayes**, and **Neural Network** approaches.
 
 ---
 
@@ -8,7 +8,7 @@ This project builds machine learning models to predict NFL team Win-Loss rate ac
 
 ```text
 COSC522_Group4_FinalProject/
-├── logistic_regression.py
+├── Linear_regression.py
 ├── naive_bayes.py
 ├── neural_network.py
 ├── random_forest.py
@@ -31,12 +31,12 @@ COSC522_Group4_FinalProject/
 │   ├── 2024.csv
 │   └── 2025.csv
 ├── models/
-│   ├── Logistic_Regression/
+│   ├── Linear_Regression/
 │   ├── Naive Bayes/
 │   ├── Neural Network/
 │   ├── Random Forest/
 └── predictions/
-│   ├── Logistic_Regression/
+│   ├── Linear_Regression/
 │   ├── Naive Bayes/
 │   ├── Neural Network/
 │   ├── Random Forest/
@@ -57,7 +57,7 @@ COSC522_Group4_FinalProject/
 - Each year contains serialized versions of trained models using 'pickle' Python library
 - Models are generated using:
   - `random_forest.py`
-  - `logistic_regression.py`
+  - `Linear_regression.py`
   - `naive_bayes.py`
   - `neural_network.py`
 
@@ -85,11 +85,11 @@ COSC522_Group4_FinalProject/
 - Serializes and saves the trained model to `Models/Random Forest/<year>/` using 'pickle' Python library
 - Outputs predictions to `Predictions/Random Forest/<year>/`
 
-### `logistic_regression.py`
-- Builds and trains a Logistic Regression model
+### `Linear_regression.py`
+- Builds and trains a Linear Regression model
 - Generates predictions for a given season
-- Serializes and saves the trained model to `Models/Logistic Regression/<year>/` using 'pickle' Python library
-- Outputs predictions to `Predictions/Logistic Regression/<year>/` 
+- Serializes and saves the trained model to `Models/Linear Regression/<year>/` using 'pickle' Python library
+- Outputs predictions to `Predictions/Linear Regression/<year>/` 
 
 ### `naive_bayes.py`
 - Builds and trains a Naive Bayes model
@@ -111,7 +111,7 @@ COSC522_Group4_FinalProject/
    ```bash
    python scrape_data.py
    python random_forest.py
-   python logistic_regression.py
+   python Linear_regression.py
    python naive_bayes.py
    python neural_network.py 
    ```

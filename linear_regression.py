@@ -31,8 +31,8 @@ NFL_YEARS = [str(year) for year in range(2010, 2026)]
 # Filepath constants
 DATA_FILEPATH = "Data"
 SCHEDULE_FILEPATH = "Schedule"
-MODEL_FILEPATH = "Models\Logistic Regression"
-PREDICTIONS_FILEPATH = "Predictions\Logistic Regression"
+MODEL_FILEPATH = "Models\Linear Regression"
+PREDICTIONS_FILEPATH = "Predictions\Linear Regression"
 
 # this function reads data from each csv and retruns a dataframe 
 def read_data(NFL_YEAR, team_name):
